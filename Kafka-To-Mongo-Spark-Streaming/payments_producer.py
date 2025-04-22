@@ -6,11 +6,11 @@ from confluent_kafka import Producer
 
 # Initialize Kafka producer
 kafka_config = {
-    'bootstrap.servers':'pkc-619z3.us-east1.gcp.confluent.cloud:9092',
+    'bootstrap.servers':'CLUSTER_CONNECTION_STRING',
     'security.protocol':'SASL_SSL',
     'sasl.mechanism':'PLAIN',
-    'sasl.username':'6EEZMZJM5BRMGCEK',
-    'sasl.password':'SmEERd0BM10fOi9rgCYhhqP/q1qQT4CGaw/AE6GVsVlbcQib98GLFKw0f07Jhb/r',
+    'sasl.username':'YOUR_API_KEY',
+    'sasl.password':'YOUR_API_SECRET_KEY',
     
 }
 
