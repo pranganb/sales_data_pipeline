@@ -49,12 +49,12 @@ payment_schema = StructType([
 # Read orders stream
 orders_stream = spark.readStream \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "pkc-619z3.us-east1.gcp.confluent.cloud:9092") \
+    .option("kafka.bootstrap.servers", "YOUR_SERVER_ID") \
     .option("subscribe", "orders_topic_data_v1") \
     .option("startingOffsets", "latest") \
     .option("kafka.security.protocol", "SASL_SSL") \
     .option("kafka.sasl.mechanism", "PLAIN") \
-    .option("kafka.sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username='6EEZMZJM5BRMGCEK' password='SmEERd0BM10fOi9rgCYhhqP/q1qQT4CGaw/AE6GVsVlbcQib98GLFKw0f07Jhb/r';") \
+    .option("kafka.sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username='YOUR_API_KEY' password='YOUR_API_SECRET';") \
     .load() \
     .selectExpr("CAST(value AS STRING) as value") \
     .select(from_json(col("value"), order_schema).alias("data")) \
@@ -66,12 +66,12 @@ logger.info("Order Read Stream Started.........")
 # Read payments stream
 payments_stream = spark.readStream \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "pkc-619z3.us-east1.gcp.confluent.cloud:9092") \
+    .option("kafka.bootstrap.servers", "YOUR_SERVER_ID") \
     .option("subscribe", "payments_topic_data_v1") \
     .option("startingOffsets", "latest") \
     .option("kafka.security.protocol", "SASL_SSL") \
     .option("kafka.sasl.mechanism", "PLAIN") \
-    .option("kafka.sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username='6EEZMZJM5BRMGCEK' password='SmEERd0BM10fOi9rgCYhhqP/q1qQT4CGaw/AE6GVsVlbcQib98GLFKw0f07Jhb/r';") \
+    .option("kafka.sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username='YOUR_API_KEY' password='YOUR_API_KEY';") \
     .load() \
     .selectExpr("CAST(value AS STRING) as value") \
     .select(from_json(col("value"), payment_schema).alias("data")) \
@@ -211,7 +211,7 @@ checkpoint_dir = "gs://stateless_streaming/kafka_stream_checkpoint"
 query = stateful_query.writeStream \
     .outputMode("append") \
     .format("mongodb") \
-    .option('spark.mongodb.connection.uri', "mongodb+srv://prangande:SilverSwords1024@cluster0.a8kopcb.mongodb.net/?retryWrites=true&w=majority&appName=mongo-db-cluster") \
+    .option('spark.mongodb.connection.uri', "YOUR_MONGODB_CONNECTION_STRING") \
     .option('spark.mongodb.database', 'ecomm_mart') \
     .option('spark.mongodb.collection', 'orders_data_process_fact') \
     .option("truncate", False) \
